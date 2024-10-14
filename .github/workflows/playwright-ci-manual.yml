@@ -1,7 +1,7 @@
-name: Playwright Manual Test Run
+name: Playwright CI - Manual Run
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # This allows manual triggering from GitHub UI
 
 jobs:
   build:
@@ -19,7 +19,11 @@ jobs:
     - name: Install dependencies
       run: |
         npm install
-        npx playwright install
+        sudo chown -R $(whoami) ./node_modules  # Ensure correct permissions for node_modules
+
+    - name: Install Playwright browsers
+      run: |
+        sudo npx playwright install  # Run with sudo to ensure the Playwright binary installs correctly
 
     - name: Run Playwright tests
       run: npx playwright test
