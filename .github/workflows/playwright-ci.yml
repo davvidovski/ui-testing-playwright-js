@@ -1,0 +1,36 @@
+name: Playwright CI - Push/PR
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npx playwright install  # Installs necessary browser binaries
+
+    - name: Run Playwright tests
+      run: npx playwright test
+
+    - name: Upload error screenshots (if any)
+      uses: actions/upload-artifact@v2
+      with:
+        name: screenshots
+        path: ./artifacts/error-screenshots

@@ -1,0 +1,15 @@
+{
+  "name": "ui-testing-playwright-js",
+  "version": "1.0.0",
+  "description": "UI Tests using Playwright with POM structure",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "playwright": "^1.20.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}
