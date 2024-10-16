@@ -22,24 +22,28 @@ Ensure that you have the following installed:
 ```bash
 git clone https://github.com/your-username/ui-testing-playwright-js.git
 cd ui-testing-playwright-js
+```
 
 ### 2. Install Dependencies
 Run the following command to install all required dependencies:
 
 ```bash
 npm install
+```
 
 ### 3. Install PLaywright browsers
 
 ```bash
 npx playwright install
- 
+```
+
 ## Running Tests
 
 To run the Playwright tests, use the following command:
 
 ```bash
 npm run test
+```
 
 ## Viewing Test Results
 
@@ -51,16 +55,18 @@ To generate HTML reports after running your tests, you can enable the reporter i
 
 ```javascript
 reporters: [['html']],
+```
 
 You can view the report after running tests:
 
 ```bash
 npx playwright show-report
+```
 
 ## Project Structure
 
 ```bash
-├── .github/                  
+├── .github/
 │   ├── workflows/                          # CI workflows for GitHub Actions
 │   ├── playwright-ci-manual-run.yml        # Manual trigger for tests
 │   ├── playwright-ci-on-schedule.yml       # Scheduled test runs
@@ -82,8 +88,9 @@ npx playwright show-report
 ├── package.json                            # Project configuration
 ├── playwright.config.js                    # Playwright test configuration
 └── README.md                               # Project setup and usage
+```
 
-##Configuration
+## Configuration
 
 You can configure the following in the playwright.config.js file:
 
