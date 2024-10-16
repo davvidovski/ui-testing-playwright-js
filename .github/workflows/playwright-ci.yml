@@ -2,47 +2,43 @@ name: Playwright CI - Push/PR
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build:
+  test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # Updated to v4
 
-    - name: Install Node.js
-      uses: actions/setup-node@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v4  # Updated to v4
       with:
         node-version: '18'
 
     - name: Install dependencies
-      run: |
-        npm install
-        sudo chown -R $(whoami) ./node_modules  # Ensure correct permissions for node_modules
+      run: npm ci  # Using npm ci for a clean install
 
-    - name: Install Playwright browsers
-      run: |
-        sudo npx playwright install  # Run with sudo to ensure the Playwright binary installs correctly
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps  # Playwright's recommended way to install dependencies
 
     - name: Run Playwright tests
       run: npx playwright test
 
     - name: Upload error screenshots (if any)
-      if: failure()
-      uses: actions/upload-artifact@v3
+      if: failure()  # Keeps screenshots only on failure
+      uses: actions/upload-artifact@v4  # Updated to v4
       with:
         name: screenshots
-        path: ./artifacts/error-screenshots
+        path: artifacts/error-screenshots
 
     - name: Upload Playwright report (if any)
-      if: always()
-      uses: actions/upload-artifact@v3
+      if: always()  # Always uploads the report, regardless of test success or failure
+      uses: actions/upload-artifact@v4  # Updated to v4
       with:
         name: playwright-report
-        path: ./playwright-report
+        path: playwright-report
+        retention-days: 30  # Optional retention period for the artifact
