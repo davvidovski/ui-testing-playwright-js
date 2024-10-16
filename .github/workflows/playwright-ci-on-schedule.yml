@@ -1,26 +1,27 @@
-name: Playwright CI - Push/PR
+name: Playwright CI - Scheduled Run
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+  schedule:
+    - cron: '0 23 * * 5'  # Every Friday at 11 PM (UTC)
+    - cron: '0 23 28-31 * *'  # Last day of the month at 11 PM (UTC), will trigger on 28-31, but only the last day will run
+    # The above schedule will cover all months with different lengths
+    
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4 
+      uses: actions/checkout@v4  
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4 
+      uses: actions/setup-node@v4  
       with:
         node-version: '18'
 
     - name: Install dependencies
-      run: npm ci  # Using npm ci for a clean install
+      run: npm ci  # Clean install using npm ci
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps  # Playwright's recommended way to install dependencies
@@ -29,16 +30,16 @@ jobs:
       run: npx playwright test
 
     - name: Upload error screenshots (if any)
-      if: failure()  # Keeps screenshots only on failure
-      uses: actions/upload-artifact@v4 
+      if: failure()  # Only upload screenshots on failure
+      uses: actions/upload-artifact@v4  
       with:
         name: screenshots
         path: artifacts/error-screenshots
 
     - name: Upload Playwright report (if any)
-      if: always()  # Always uploads the report, regardless of test success or failure
-      uses: actions/upload-artifact@v4 
+      if: always()  # Always upload the report
+      uses: actions/upload-artifact@v4  
       with:
         name: playwright-report
         path: playwright-report
-        retention-days: 30  # Optional retention period for the artifact
+        retention-days: 30  # Keep the report for 30 days
