@@ -60,18 +60,28 @@ npx playwright show-report
 ## Project Structure
 
 ```bash
-.
-├── pages/                # Page Object Models (POM)
-│   ├── homepage.js       # Home page actions and locators
-│   └── ...
-├── tests/                # Test files
-│   ├── testHomepage.spec.js   # Example test file for the homepage
-│   └── ...
-├── locators/               
-│   ├── locators.json     # JSON file containing locators for different page elements
-├── playwright.config.js  # Playwright configuration
-├── package.json          # Project configuration and dependencies
-└── README.md             # Project documentation
+├── .github/                  
+│   ├── workflows/                          # CI workflows for GitHub Actions
+│   ├── playwright-ci-manual-run.yml        # Manual trigger for tests
+│   ├── playwright-ci-on-schedule.yml       # Scheduled test runs
+│   └── playwright-ci-push-pr.yml           # Tests on push or PR
+├── error-screenshots/                      # Screenshots of failed tests
+├── locators/                               # JSON locators for page elements
+│   ├── homepageLocators.json               # Homepage element locators
+├── node_modules/                           # Installed dependencies
+├── pages/                                  # Page Object Models (POM)
+│   ├── homepage.js                         # Homepage actions and locators
+│   └── ...                                 # Other POM files for different pages
+├── test-results/                           # Test result artifacts
+├── tests/                                  # Playwright test files
+│   ├── testHomepageValidations.spec.js     # Homepage test file
+│   └── ...                                 # Other test files
+├── utils/                                  # Playwright test files
+│   ├── setup.js                            # Setup for launching and configuring browser instance
+├── package-lock.json                       # Exact versions of dependencies
+├── package.json                            # Project configuration
+├── playwright.config.js                    # Playwright test configuration
+└── README.md                               # Project setup and usage
 
 ##Configuration
 
